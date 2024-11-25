@@ -32,9 +32,9 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: backend-build-artifact
-        path: .  # Replace with the correct output directory of your build process
-        exclude:
-          path: node_modules
+        path: |
+          .
+          !./node_modules
 
     - name: Azure Login
       uses: azure/login@v1
