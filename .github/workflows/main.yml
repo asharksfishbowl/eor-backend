@@ -33,7 +33,9 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: backend-build-artifact
-        path: dist/  # Replace with the directory containing your compiled backend code
+        path: '**/*'
+        exclude: '**/node_modules/**'
+        retention-days: 1
 
     - name: Azure Login
       uses: azure/login@v1
@@ -43,7 +45,13 @@ jobs:
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
-        app-name: "eor-backend"  # Replace with your Azure App Service name for the backend
+        app-name: "eor-backend"
         slot-name: "production"
-        package: dist/  # Replace with the directory containing your compiled backend code
+        package: '**/*'
+        exclude: '**/node_modules/**'
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+
+    - name: Install Production Dependencies on Azure
+      run: |
+        cd /home/site/wwwroot
+        npm install --only=production    
