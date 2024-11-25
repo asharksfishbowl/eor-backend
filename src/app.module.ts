@@ -21,12 +21,12 @@ import * as fs from 'fs';
       synchronize: false,
       extra: {
         ssl: {
-          ca: fs.readFileSync('certs/DigiCertGlobalRootCA.crt.pem'), // Use the downloaded CA certificate
+          ca: fs.readFileSync('certs/DigiCertGlobalRootCA.crt.pem'),
           rejectUnauthorized: true,
         },
       },
-    }),
-  ],
+    })
+],
   controllers: [AppController],
   providers: [AppService],
 })
