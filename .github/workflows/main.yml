@@ -31,7 +31,7 @@ jobs:
         run: npm run build
 
       - name: Write Certificate to File
-        run: echo "${{ secrets.CERT }}" > /dist/certs/DigiCertGlobalRootCA.crt.pem
+        run: echo "${{ secrets.CERT }}" > dist/DigiCertGlobalRootCA.crt.pem
 
       - name: Azure Login
         uses: azure/login@v1
