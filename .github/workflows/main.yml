@@ -30,6 +30,9 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Write Certificate to File
+        run: echo "${{ secrets.CERT }}" > certs/DigiCertGlobalRootCA.crt.pem
+
       - name: Azure Login
         uses: azure/login@v1
         with:
