@@ -33,9 +33,9 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: backend-build-artifact
-        path: '**/*'
-        exclude: '**/node_modules/**'
-        retention-days: 1
+        path: |
+          .
+          !node_modules
 
     - name: Azure Login
       uses: azure/login@v1
@@ -47,8 +47,9 @@ jobs:
       with:
         app-name: "eor-backend"
         slot-name: "production"
-        package: '**/*'
-        exclude: '**/node_modules/**'
+        package: |
+          .
+          !node_modules
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
 
     - name: Install Production Dependencies on Azure
