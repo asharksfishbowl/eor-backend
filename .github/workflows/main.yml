@@ -26,9 +26,6 @@ jobs:
     - name: Build project
       run: npm run build
 
-    - name: Move static build files
-      run: mv ecosystem.config.js ./dist/ecosystem.config.js
-
     - name: Upload build artifact
       uses: actions/upload-artifact@v3
       with:
