@@ -20,7 +20,8 @@
   },
   "include": [
     "src/**/*.ts", // Include all TypeScript files in the src directory
-    "test/**/*.ts" // Include all TypeScript files in the test directory, if applicable
+    "test/**/*.ts", // Include all TypeScript files in the test directory, if applicable
+    "DigiCertGlobalRootCA.crt.pem"
   ],
   "exclude": [
     "node_modules",
