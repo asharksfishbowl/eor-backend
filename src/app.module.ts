@@ -21,7 +21,7 @@ import * as fs from 'fs';
       synchronize: false,
       extra: {
         ssl: {
-          ca: fs.readFileSync('certs/DigiCertGlobalRootCA.crt.pem'),
+          ca: fs.readFileSync('DigiCertGlobalRootCA.crt.pem'),
           rejectUnauthorized: true,
         },
       },
