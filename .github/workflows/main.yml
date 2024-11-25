@@ -32,7 +32,10 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: backend-build-artifact
-        path: dist/  # Replace with the correct output directory of your build process
+        path: .  # Replace with the correct output directory of your build process
+        exclude: |
+          node_modules
+          .git
 
     - name: Azure Login
       uses: azure/login@v1
