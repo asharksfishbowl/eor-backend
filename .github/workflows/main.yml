@@ -46,3 +46,11 @@ jobs:
         slot-name: "production"
         package: dist/  # Replace with the directory containing your compiled backend code
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+
+    - name: Install PM2 Globally on Azure
+      run: npm install pm2 -g
+      working-directory: /home/site/wwwroot
+
+    - name: Start Application with PM2
+      run: pm2 start ecosystem.config.js
+      working-directory: /home/site/wwwroot
