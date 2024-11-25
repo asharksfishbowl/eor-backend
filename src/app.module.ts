@@ -17,7 +17,7 @@ import { AppService } from './app.service';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,  // Disable in production
+      synchronize: false,  // Disable in production
       extra: {
         ssl: {
           rejectUnauthorized: false,
