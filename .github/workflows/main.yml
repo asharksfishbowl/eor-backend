@@ -21,20 +21,19 @@ jobs:
         node-version: '20'  # Adjust this to match your backend Node.js version requirement
 
     - name: Install dependencies
-      run: |
-        npm install
+      run: npm install
 
     - name: Build project
-      run: |
-        npm run build
+      run: npm run build
+
+    - name: Move static build files
+      run: mv ecosystem.config.js ./dist/ecosystem.config.js
 
     - name: Upload build artifact
       uses: actions/upload-artifact@v3
       with:
         name: backend-build-artifact
-        path: |
-          .
-          !./node_modules
+        path: dist  # Replace with the directory containing your compiled backend code
 
     - name: Azure Login
       uses: azure/login@v1
@@ -46,7 +45,5 @@ jobs:
       with:
         app-name: "eor-backend"  # Replace with your Azure App Service name for the backend
         slot-name: "production"
-        package: |
-          .
-          !./node_modules  # Replace with the directory containing your compiled backend code
+        package: dist  # Replace with the directory containing your compiled backend code
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
