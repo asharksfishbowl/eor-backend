@@ -33,9 +33,8 @@ jobs:
       with:
         name: backend-build-artifact
         path: .  # Replace with the correct output directory of your build process
-        exclude: |
-          node_modules
-          .git
+        exclude:
+          path: node_modules
 
     - name: Azure Login
       uses: azure/login@v1
