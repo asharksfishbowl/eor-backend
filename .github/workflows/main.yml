@@ -46,8 +46,8 @@ jobs:
         with:
           app-name: "eor-backend"  # Replace with your Azure App Service name
           slot-name: "production"
-          package: ./  # Directory containing your built backend code
+          package: dist/  # Directory containing your built backend code
 
       - name: Azure Startup Command
         run: |
-          echo 'node dist/main.js' > startup.txt
+          echo 'node ./main.js' > startup.txt
