@@ -22,7 +22,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'  # Match your backend's Node.js version
+          node-version: '20'
 
       - name: Install dependencies
         run: npm ci
@@ -30,26 +30,11 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Write Certificate to Root
-        run: echo "${{ secrets.CERT }}" > ./DigiCertGlobalRootCA.crt.pem
-
       - name: Write Certificate to Dist
         run: echo "${{ secrets.CERT }}" > dist/DigiCertGlobalRootCA.crt.pem
 
       - name: Copy ecosystem.config.js to dist
         run: cp ecosystem.config.js dist/
-
-      - name: Copy package.json to dist
-        run: cp package.json dist/
-
-      - name: Copy package-lock.json to dist
-        run: cp package-lock.json dist/
-
-      - name: Copy tsconfig.build.json to dist
-        run: cp tsconfig.build.json dist/
-
-      - name: Copy tsconfig.json to dist
-        run: cp tsconfig.json dist/
 
       - name: Azure Login
         uses: azure/login@v1
@@ -59,18 +44,6 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "eor-backend"  # Replace with your App Service name
+          app-name: "eor-backend"
           slot-name: "production"
           package: "dist"
-
-      - name: Install PM2 globally
-        run: npm install -g pm2
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Start using PM2
-        run: pm2 start dist/main.js --no-daemon
-
-      - name: Add Linking for PM2 Logs
-        run: pm2 link baqtlxb7xkfgmwy w7nbwvo3afg6z5h
