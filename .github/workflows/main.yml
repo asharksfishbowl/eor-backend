@@ -45,6 +45,12 @@ jobs:
       - name: Copy package-lock.json to dist
         run: cp package-lock.json dist/
 
+      - name: Copy tsconfig.build.json to dist
+        run: cp tsconfig.build.json dist/
+
+      - name: Copy tsconfig.json to dist
+        run: cp tsconfig.json dist/
+
       - name: Azure Login
         uses: azure/login@v1
         with:
