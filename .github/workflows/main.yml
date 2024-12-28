@@ -70,7 +70,7 @@ jobs:
         run: npm install
 
       - name: Start using PM2
-        run: pm2 start site/wwwroot/main.js --no-daemon
+        run: pm2 start /site/wwwroot/main.js --no-daemon
 
       - name: Add Linking for PM2 Logs
         run: pm2 link baqtlxb7xkfgmwy w7nbwvo3afg6z5h
