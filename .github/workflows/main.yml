@@ -30,10 +30,10 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Write Certificate to File
+      - name: Write Certificate to Root
         run: echo "${{ secrets.CERT }}" > ./DigiCertGlobalRootCA.crt.pem
 
-      - name: Write Certificate to File
+      - name: Write Certificate to Dist
         run: echo "${{ secrets.CERT }}" > dist/DigiCertGlobalRootCA.crt.pem
 
       - name: Copy ecosystem.config.js to dist
@@ -57,5 +57,14 @@ jobs:
           slot-name: "production"
           package: "."
 
-      - name: Set Startup Command
-        run: echo 'node dist/main.js' > startup.txt
+      - name: Run post-deployment commands
+        run: |
+          # Install PM2 globally
+          npm install -g pm2
+          # cd into the deployed folder
+          cd /home/site/wwwroot
+          # Start using PM2
+          pm2-runtime start ecosystem.config.js --env production
+          # Add Linking for PM2 Logs
+          pm2 link baqtlxb7xkfgmwy w7nbwvo3afg6z5h
+        shell: bash
