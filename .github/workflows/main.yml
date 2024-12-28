@@ -1,4 +1,4 @@
-name: Deploy Backend to Azure App Service with PM2
+name: Deploy Backend to Azure App Service
 
 on:
   push:
@@ -22,19 +22,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'  # Match your Node.js version requirement
+          node-version: '20'  # Match your backend's Node.js version
 
       - name: Install dependencies
-        run: npm ci  # Faster and uses package-lock.json
+        run: npm ci
 
       - name: Build project
         run: npm run build
-
-      - name: Write Certificate to File
-        run: echo "${{ secrets.CERT }}" > dist/DigiCertGlobalRootCA.crt.pem
-
-      - name: Copy ecosystem.config.js to dist
-        run: cp ecosystem.config.js dist/
 
       - name: Azure Login
         uses: azure/login@v1
@@ -44,15 +38,9 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "eor-backend"  # Replace with your Azure App Service name
+          app-name: "eor-backend"  # Replace with your App Service name
           slot-name: "production"
-          package: dist/  # Directory containing your compiled backend code
+          package: dist/
 
-      - name: Install PM2 Globally on Azure
-        run: npm install pm2 -g
-
-      - name: Start Backend with PM2
-        run: |
-          pm2 start ../main.js --name eor-backend --env production
-          pm2 link baqtlxb7xkfgmwy w7nbwvo3afg6z5h
-          pm2 save
+      - name: Set Startup Command
+        run: echo 'node dist/main.js' > startup.txt
