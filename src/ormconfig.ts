@@ -22,7 +22,7 @@ const AppDataSource = new DataSource({
             connectTimeout: 30000,
             ssl: {
                 ca: fs.readFileSync(path.resolve('./DigiCertGlobalRootCA.crt.pem')),
-                rejectUnauthorized: false,
+                rejectUnauthorized: true,
             },
         }
         : {},
