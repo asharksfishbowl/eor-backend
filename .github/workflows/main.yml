@@ -51,9 +51,6 @@ jobs:
       - name: Copy tsconfig.json to dist
         run: cp tsconfig.json dist/
 
-      - name: Copy .env to dist
-        run: cp .env dist/
-
       - name: Azure Login
         uses: azure/login@v1
         with:
