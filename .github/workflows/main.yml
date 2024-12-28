@@ -53,6 +53,6 @@ jobs:
 
       - name: Start Backend with PM2
         run: |
-          pm2 start site/wwwroot/main.js --name eor-backend --env production
+          pm2 start ./main.js --name eor-backend --env production
           pm2 link baqtlxb7xkfgmwy w7nbwvo3afg6z5h
           pm2 save
