@@ -25,7 +25,7 @@ jobs:
           node-version: '20'  # Adjust this to match your backend Node.js version requirement
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci  # Faster and deterministic installation using package-lock.json
 
       - name: Build project
         run: npm run build
@@ -36,12 +36,6 @@ jobs:
       - name: Copy ecosystem.config.js to dist
         run: cp ecosystem.config.js dist/
 
-      - name: Copy package.json to dist
-        run: cp package.json dist/
-
-      - name: Copy package-lock.json to dist
-        run: cp package-lock.json dist/
-
       - name: Azure Login
         uses: azure/login@v1
         with:
@@ -50,22 +44,10 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "eor-backend"  # Replace with your Azure App Service name for the backend
+          app-name: "eor-backend"  # Replace with your Azure App Service name
           slot-name: "production"
-          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-          package: dist/  # Replace with the directory containing your compiled backend code
+          package: dist/  # Directory containing your built backend code
 
-      - name: Install NestJS CLI Globally on Azure
-        run: npm install -g @nestjs/cli
-
-      - name: Install PM2 Globally on Azure
-        run: npm install pm2 -g
-
-      - name: Install Production Dependencies on Azure
-        run: npm install
-
-      - name: Build project
-        run: npm run build
-
-      - name: Start Backend with PM2
-        run: pm2 start ecosystem.config.js --no-daemon
+      - name: Azure Startup Command
+        run: |
+          echo 'node dist/main.js' > startup.txt
