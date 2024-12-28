@@ -1,4 +1,4 @@
-name: Deploy Backend to Azure App Service
+name: Deploy Backend to Azure App Service with PM2
 
 on:
   push:
@@ -22,10 +22,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'  # Adjust this to match your backend Node.js version requirement
+          node-version: '20'  # Match your Node.js version requirement
 
       - name: Install dependencies
-        run: npm ci  # Faster and deterministic installation using package-lock.json
+        run: npm ci  # Faster and uses package-lock.json
 
       - name: Build project
         run: npm run build
@@ -46,8 +46,12 @@ jobs:
         with:
           app-name: "eor-backend"  # Replace with your Azure App Service name
           slot-name: "production"
-          package: dist/  # Directory containing your built backend code
+          package: dist/  # Directory containing your compiled backend code
 
-      - name: Azure Startup Command
+      - name: Install PM2 Globally on Azure
+        run: npm install pm2 -g
+
+      - name: Start Backend with PM2
         run: |
-          echo 'node ./main.js' > startup.txt
+          pm2 start dist/main.js --name eor-backend
+          pm2 save
