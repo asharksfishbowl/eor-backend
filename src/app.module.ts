@@ -10,6 +10,7 @@ import AppDataSource from './ormconfig';
 // Import other modules
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { RoadmapModule } from './roadmap/roadmap.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { UserModule } from './user/user.module';
     TypeOrmModule.forRoot(AppDataSource.options), // Use options from AppDataSource
     AuthModule,
     UserModule,
+    RoadmapModule,
   ],
   controllers: [AppController],
   providers: [AppService],
