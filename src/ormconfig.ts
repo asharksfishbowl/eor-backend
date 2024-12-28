@@ -14,6 +14,7 @@ const AppDataSource = new DataSource({
     database: process.env.DB_DATABASE || 'test',
     synchronize: false,
     logging: true,
+    connectTimeout: 30000,
     entities: [path.join(__dirname, '**/*.entity{.ts,.js}')], // Adjust paths as needed
     migrations: [path.join(__dirname, 'migrations/*{.ts,.js}')],
     migrationsTableName: 'migrations',
@@ -21,7 +22,7 @@ const AppDataSource = new DataSource({
         ? {
             ssl: {
                 ca: fs.readFileSync(path.resolve('./DigiCertGlobalRootCA.crt.pem')),
-                rejectUnauthorized: true,
+                rejectUnauthorized: false,
             },
         }
         : {},
