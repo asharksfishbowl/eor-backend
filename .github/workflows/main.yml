@@ -30,6 +30,18 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Write Certificate to File
+        run: echo "${{ secrets.CERT }}" > dist/DigiCertGlobalRootCA.crt.pem
+
+      - name: Copy ecosystem.config.js to dist
+        run: cp ecosystem.config.js dist/
+
+      - name: Copy package.json to dist
+        run: cp package.json dist/
+
+      - name: Copy package-lock.json to dist
+        run: cp package-lock.json dist/
+
       - name: Azure Login
         uses: azure/login@v1
         with:
